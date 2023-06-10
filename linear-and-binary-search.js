@@ -81,6 +81,7 @@ const tests = [
 // Algorithms
 
 function linearSearch(cards, query) {
+  // Linear search is a O(N) algorithm
   console.log("CARDS", cards, "QUERY", query);
   let position = 0;
   const finalPosition = cards.length - 1;
@@ -96,7 +97,9 @@ function linearSearch(cards, query) {
 }
 
 function binarySearch(cards, query) {
-  console.log("CARDS", cards, "QUERY", query);
+  // Binary search is a O(Log N) algorithm
+
+  console.log("CARDS", cards, "QUERY", query)
   let position = 0;
   let finalPosition = cards.length - 1;
 
