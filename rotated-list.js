@@ -23,7 +23,7 @@ const tests = [
   {
     name: 'A list that was rotated just once.',
     nums: [2, 4, 6, 8, 10, 12, 14, 16],
-    output: 1,
+    output: 0,
   },
   {
     name: 'A list that was rotated n-1 times, where n is the size of the list.',
@@ -32,7 +32,7 @@ const tests = [
   },
   {
     name: 'A list that was rotated n times, where n is the size of the list',
-    nums: [8, 10, 12, 14, 16, 2, 4, 6],
+    nums: [2, 4, 6, 8, 10, 12, 14, 16],
     output: 0,
   },
   {
@@ -45,7 +45,7 @@ const tests = [
     nums: [2],
     output: 0,
   },
-];
+]
 
 function determineRotations(nums) {
   /*
@@ -54,29 +54,36 @@ function determineRotations(nums) {
     If its position is greater than 0, then the list was rotated that number of times
   */
 
-    if (!nums.length > 1){
-        return 0
+  // If the length of nums is less than or equal to 1, return 0, because it means nums has no element or just 1 element, so cannot be rotated.
+  if (!(nums.length > 1)) {
+    return 0
+  }
+
+  for (let num of nums) {
+
+    // Get the position (index) of current num.
+    let position = nums.indexOf(num)
+
+    // Check if there exists a next number in the array. If not, return 0, because it means that we reach the last number without identifying a rotation.
+    let next = nums.indexOf(num) === nums.length - 1 ? false : position + 1
+    if (!next) {
+      return 0
+
+    // Check if the current number is greater than its successor. Return the index of the successor if true, because it means that nums was rotated.
+    } else if (nums[position] > nums[next]) {
+      return next
     }
-    nums.forEach(num => {
-        if(nums.indexOf(num) == nums.length - 1) {
-            return 0
-        }
-        if(num > nums.indexOf(num+1)){
-            return nums.indexOf(num)
-        }
-        
-    });
+  }
 }
 
-tests.forEach(test => {
-    // TODO
-    let result = determineRotations(test.nums)
-    if (result === test.output){
-        console.log(``)
-        console.log(`${test.name} -> OK`)
-    } else {
-        console.log(`${test.name} -> FAIL`)
-    }
 
-
+tests.forEach((test) => {
+  let result = determineRotations(test.nums)
+  if (result == test.output) {
+    console.log(`Expected output ${test.output}, output ${result}`)
+    console.log(`${test.name} -> OK`)
+  } else {
+    console.log(`Expected output ${test.output}, output ${result}`)
+    console.log(`${test.name} -> FAIL`)
+  }
 })
